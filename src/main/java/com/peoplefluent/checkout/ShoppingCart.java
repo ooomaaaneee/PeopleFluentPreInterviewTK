@@ -12,6 +12,8 @@ public class ShoppingCart {
 
     public Map<String, Product> productCatalog;
     public static final String POUND = "\u00a3";
+    public static final String APPLE = "Apple";
+    public static final String ORANGE = "Orange";
 
     /**
      * Constructor to initialize the Shopping Cart with the appropriate Product Catalog and Offers
@@ -38,15 +40,19 @@ public class ShoppingCart {
         productCatalog = new HashMap<String, Product>();
 
         Product apple = new Product();
+        apple.setId(1);
+        apple.setName(APPLE);
         apple.setPrice(new BigDecimal("0.60").setScale(2, RoundingMode.CEILING));
         apple.setOfferEnabled(appleOfferEnabled);
 
         Product orange = new Product();
+        apple.setId(2);
+        apple.setName(ORANGE);
         orange.setPrice(new BigDecimal("0.25").setScale(2, RoundingMode.CEILING));
         orange.setOfferEnabled(orangeOfferEnabled);
 
-        productCatalog.put("Apple", apple);
-        productCatalog.put("Orange", orange);
+        productCatalog.put(APPLE, apple);
+        productCatalog.put(ORANGE, orange);
     }
 
     /**
@@ -63,17 +69,17 @@ public class ShoppingCart {
             //Loop to calculate the Total Apples and Oranges
             for (int i = 0; i < products.length; i++) {
                 if (productCatalog.containsKey(products[i])) {
-                    if("Apple".equalsIgnoreCase(products[i])) {
+                    if(APPLE.equalsIgnoreCase(products[i])) {
                         totalApples = totalApples.add(new BigDecimal("1.00").setScale(2, RoundingMode.CEILING));
-                    } else if("Orange".equalsIgnoreCase(products[i])) {
+                    } else if(ORANGE.equalsIgnoreCase(products[i])) {
                         totalOranges = totalOranges.add(new BigDecimal("1.00").setScale(2, RoundingMode.CEILING));
                     }
                 }
             }
 
             //Calculate the total price of Apples in the shopping cart
-            BigDecimal priceOfApple = productCatalog.get("Apple").getPrice();
-            boolean offerForAppleEnabled = productCatalog.get("Apple").isOfferEnabled();
+            BigDecimal priceOfApple = productCatalog.get(APPLE).getPrice();
+            boolean offerForAppleEnabled = productCatalog.get(APPLE).isOfferEnabled();
             BigDecimal totalPriceOfApples = priceOfApple.multiply(totalApples).setScale(2, RoundingMode.CEILING);
 
             //Apply the buy 1 get 1 free offer for Apples
@@ -85,8 +91,8 @@ public class ShoppingCart {
             }
 
             //Calculate the total price of Oranges in the shopping cart
-            BigDecimal priceOfOrange = productCatalog.get("Orange").getPrice();
-            boolean offerForOrangeEnabled = productCatalog.get("Orange").isOfferEnabled();
+            BigDecimal priceOfOrange = productCatalog.get(ORANGE).getPrice();
+            boolean offerForOrangeEnabled = productCatalog.get(ORANGE).isOfferEnabled();
             BigDecimal totalPriceOfOranges = priceOfOrange.multiply(totalOranges).setScale(2, RoundingMode.CEILING);
 
             //Apply the buy 3 for the price of 2 offer for Oranges
